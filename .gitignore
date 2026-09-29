@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+.vscode/
+.venv/
+*.pyc
+.DS_Store
+Aufgabe Tag 2 - CI-Pipeline mit GitHub Actions.pdf
