@@ -29,7 +29,7 @@ jobs:
           VALIDATE_PYTHON_ISORT: false
           VALIDATE_PYTHON_MYPY: false
           VALIDATE_SPELL_CODESPELL: false
-          FILTER_REGEX_EXCLUDE: challenge/.*
+          FILTER_REGEX_EXCLUDE: (challenge/.*|\.github/linters/.*)
 
   test:
     runs-on: ubuntu-latest
