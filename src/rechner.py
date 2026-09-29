@@ -4,3 +4,5 @@ def summe(a, b):
 def differenz(a, b):
     """Gibt die Differenz von a und b zurück."""
     return a - b
+
+# Test Kommentar für PR
