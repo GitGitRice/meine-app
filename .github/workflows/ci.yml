@@ -35,14 +35,14 @@ jobs:
       contents: read
     strategy:
       fail-fast: false
-      matrix: 
+      matrix:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v4
         with:
-            persist-credentials: false
+          persist-credentials: false
       - name: Python installieren
         uses: actions/setup-python@v5
         with:
