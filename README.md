@@ -49,10 +49,10 @@ Erwartete Ausgabe: `3 passed`.
 
 Die Pipeline war nach der Challenge aus zwei Gründen rot:
 
-| Fehler | Seite | Log-Meldung | Fix |
-|---|---|---|---|
-| `requirement.txt` statt `requirements.txt` im Workflow | Workflow | `Could not open requirements file` | Dateinamen korrigiert |
-| `assert summe(2, 3) == 6` im Test | Anwendung | `assert 5 == 6` · `1 failed, 2 passed` | Erwartung auf `5` korrigiert – der Test war falsch, nicht die Funktion |
+| Fehler                                                 | Seite     | Log-Meldung                            | Fix                                                                    |
+| ------------------------------------------------------ | --------- | -------------------------------------- | ---------------------------------------------------------------------- |
+| `requirement.txt` statt `requirements.txt` im Workflow | Workflow  | `Could not open requirements file`     | Dateinamen korrigiert                                                  |
+| `assert summe(2, 3) == 6` im Test                      | Anwendung | `assert 5 == 6` · `1 failed, 2 passed` | Erwartung auf `5` korrigiert – der Test war falsch, nicht die Funktion |
 
 Danach sind alle Jobs grün mit `3 passed`.
 
