@@ -11,14 +11,16 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Pip-Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -62,4 +64,7 @@ jobs:
           path: build/
 
       - name: Deployment-Platzhalter
-        run: echo "Deployment läuft"
+        run: echo "Deployment läuft in ${{ env.APP_ENV }}"
+
+      - name: Version ausgeben
+        run: echo "Deploying Version ${{ needs.test.outputs.version }}"
