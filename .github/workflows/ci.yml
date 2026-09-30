@@ -30,7 +30,7 @@ jobs:
 
       - name: Konfiguration anzeigen
         run: echo "Python ${{ env.PYTHON_VERSION }} in ${{ env.APP_ENV }}"
-        
+
       - name: Umgebung wechseln
         env:
           APP_ENV: production
@@ -42,3 +42,7 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
           echo "Runner: ${{ runner.os }}"
+
+      - name: Deploy vorbereiten
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploy wird vorbereitet"
