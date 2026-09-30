@@ -53,6 +53,17 @@ jobs:
         id: version
         run: echo "version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
 
+      - name: Paket bauen
+        run: |
+          mkdir -p build
+          python -m zipfile -c build/app.zip src/
+          
+      - name: Build-Artifact hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-paket
+          path: build/
+
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
