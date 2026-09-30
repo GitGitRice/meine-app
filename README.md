@@ -91,3 +91,7 @@ Die korrigierten Challenge-Dateien liegen als Kopie im Ordner `challenge/`:
 
 - `challenge/ci-challenge.yml` – der Challenge-Workflow (liegt bewusst nicht in `.github/workflows/`, damit er nicht als zweite Pipeline läuft)
 - `challenge/challenge_test_rechner.py` – die Challenge-Tests (Name beginnt bewusst nicht mit `test_`, damit pytest sie nicht doppelt ausführt)
+
+## Archiv: Workflow vor der Challenge Tag 3
+
+`archive/tag-3/ci.yml` ist eine Kopie des Workflows vor der Challenge von Tag 3 (mit `env`, Cache, Artifact, Job-Output und bedingtem `deploy`-Job). Die Datei liegt bewusst nicht in `.github/workflows/`, damit sie nicht als zweite Pipeline läuft. Zum Wiederverwenden nach `.github/workflows/ci.yml` kopieren. Sie nutzt die Composite Action `.github/actions/setup-projekt`.
