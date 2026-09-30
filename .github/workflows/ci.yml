@@ -30,3 +30,7 @@ jobs:
 
       - name: Konfiguration anzeigen
         run: echo "Python ${{ env.PYTHON_VERSION }} in ${{ env.APP_ENV }}"
+      - name: Umgebung wechseln
+        env:
+          APP_ENV: production
+        run: echo "Step sieht ${{ env.APP_ENV }}"
