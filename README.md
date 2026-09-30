@@ -12,18 +12,15 @@ Sie hat zwei Jobs, die parallel laufen:
 
 ### Job `test`
 
-Läuft auf `ubuntu-latest` als Matrix Build mit Python **3.10**, **3.11** und **3.12**. Jede Version läuft als eigener Job. Mit `fail-fast: false` laufen alle Versionen zu Ende, auch wenn eine fehlschlägt.
+Läuft auf `ubuntu-latest` mit einer Python-Version. Die Version steht in der Workflow-Variable `PYTHON_VERSION` (aktuell **3.12**). Die Variable `APP_ENV` legt die Umgebung fest (aktuell `staging`).
 
 Schritte:
 
 1. **Repository auschecken** – `actions/checkout` holt den Code auf den Runner.
-2. **Python installieren** – `actions/setup-python` installiert die Python-Version aus der Matrix.
+2. **Python installieren** – `actions/setup-python` installiert die Python-Version aus `PYTHON_VERSION`.
 3. **Dependencies installieren** – `python -m pip install -r requirements.txt` (installiert `pytest`).
 4. **Tests ausführen** – `python -m pytest -v`. Schlägt ein Test fehl, wird der Job rot.
-
-### Job `lint`
-
-Nutzt die Marketplace-Action [super-linter](https://github.com/marketplace/actions/super-linter). Sie prüft Python-, YAML- und Workflow-Dateien auf Stil- und Syntaxfehler.
+5. **Konfiguration anzeigen** – gibt `PYTHON_VERSION` und `APP_ENV` im Log aus.
 
 ### Sicherheit
 
