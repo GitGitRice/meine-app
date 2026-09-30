@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Repository auschecken
@@ -47,6 +49,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: echo "Deploy wird vorbereitet"
 
+      - name: Version ermitteln
+        id: version
+        run: echo "version=1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
@@ -54,3 +60,6 @@ jobs:
     steps:
       - name: Deployment-Platzhalter
         run: echo "Deployment für ${{ github.ref_name }}"
+      
+      - name: Version ausgeben
+        run: echo "Deploying Version ${{ needs.test.outputs.version }}"
