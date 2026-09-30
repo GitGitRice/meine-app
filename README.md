@@ -29,6 +29,40 @@ Schritte:
 - `persist-credentials: false` beim Checkout.
 - Die Workflow-Datei wurde mit [zizmor](https://github.com/zizmorcore/zizmor) geprüft.
 
+### Commit-SHA für eine Action finden
+
+Ein Tag wie `v4` kann sich ändern. Ein Commit-SHA ändert sich nie. Darum steht im Workflow der SHA und die Version nur als Kommentar:
+
+```yaml
+uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+```
+
+Voraussetzung: [GitHub CLI](https://cli.github.com/) (`gh`) ist installiert und angemeldet (`gh auth login`).
+
+1. Neueste Version finden:
+
+   ```bash
+   gh api repos/actions/upload-artifact/releases/latest --jq .tag_name
+   ```
+
+   Alle Tags einer Hauptversion (hier `v4`) zeigen:
+
+   ```bash
+   git ls-remote --tags https://github.com/actions/upload-artifact 'v4.*'
+   ```
+
+2. Commit-SHA für genau diese Version holen:
+
+   ```bash
+   gh api repos/actions/upload-artifact/commits/v7.0.1 --jq .sha
+   ```
+
+   Der Befehl gibt immer den SHA des Commits aus, auch bei annotierten Tags. Ohne `gh` geht es mit `git ls-remote`. Bei annotierten Tags gibt es dort zwei Zeilen. Dann gilt der SHA der Zeile mit `^{}` am Ende.
+
+3. Im Workflow `@v7.0.1` durch `@<SHA> # v7.0.1` ersetzen.
+
+Für eine andere Action `actions/upload-artifact` durch `<besitzer>/<repo>` ersetzen, zum Beispiel `actions/download-artifact`. Immer eine genaue Version (`v7.0.1`) nehmen, nicht nur die Hauptversion (`v7`). Sonst passt der Kommentar nicht sicher zum SHA.
+
 ## Lokal ausführen
 
 ```bash
