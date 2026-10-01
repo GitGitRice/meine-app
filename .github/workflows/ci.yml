@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 env:
   PYTHON_VERSION: "3.12" # Python-Version für die Tests
   APP_ENV: "staging" # Umgebung für die Tests
@@ -62,6 +65,9 @@ jobs:
 
 
   deploy:
+    permissions:
+      contents: write
+      actions: read
     needs: test
     if: github.ref == 'refs/heads/main'
     environment: production
@@ -73,8 +79,24 @@ jobs:
           name: app-paket
           path: build/
           
+      - name: Zugangsdaten prüfen
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "Token-Länge: ${#DEPLOY_TOKEN}"
+          
       - name: Deployment-Platzhalter
         run: echo "Deploy nach ${{ vars.DEPLOY_TARGET }}"
 
       - name: Version ausgeben
         run: echo "Deploying Version ${{ needs.test.outputs.version }}"
+
+      - name: Release erstellen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }} # kein Checkout im Job, gh braucht das Ziel-Repo
+        run: |
+          gh release create "v1.0.${{ github.run_number }}" \
+            --title "Version 1.0.${{ github.run_number }}" \
+            --notes "Automatisches Deployment aus GitHub Actions" \
+            build/app.zip
