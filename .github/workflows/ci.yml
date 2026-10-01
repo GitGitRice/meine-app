@@ -55,12 +55,6 @@ jobs:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           echo "Token-Länge: ${#DEPLOY_TOKEN}"
-
-      - name: Maskierung anzeigen
-        env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-        run: |
-          echo "Direkt: $DEPLOY_TOKEN"
       
       - name: Deployment-Ziel anzeigen
         run: |
@@ -70,6 +64,7 @@ jobs:
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Build-Artifact herunterladen
@@ -77,9 +72,9 @@ jobs:
         with:
           name: app-paket
           path: build/
-
+          
       - name: Deployment-Platzhalter
-        run: echo "Deployment läuft in ${{ env.APP_ENV }}"
+        run: echo "Deploy nach ${{ vars.DEPLOY_TARGET }}"
 
       - name: Version ausgeben
         run: echo "Deploying Version ${{ needs.test.outputs.version }}"
