@@ -61,6 +61,10 @@ jobs:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           echo "Direkt: $DEPLOY_TOKEN"
+      
+      - name: Deployment-Ziel anzeigen
+        run: |
+          echo "Deployment-Ziel: ${{vars.DEPLOY_TARGET}}"
 
 
   deploy:
